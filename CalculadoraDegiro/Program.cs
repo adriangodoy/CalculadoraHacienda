@@ -60,7 +60,7 @@ static List<(DateTime, decimal, string)> GetDailyValues(IGrouping<string, Binanc
 
 static List<BinanceLine> GetDegiroLines()
 {
-    var lines = File.ReadAllLines("C:\\Working\\ANA\\BinanceANA.csv");
+    var lines = File.ReadAllLines("C:\\Working\\BinanceDataAdri.csv");
     var linesNoHeader = lines[1..];
     return linesNoHeader.Select(line =>
     {
@@ -73,7 +73,7 @@ static List<BinanceLine> GetDegiroLines()
             Coin = fields[4],
             Change = decimal.Parse(fields[5], NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint),
         };
-    }).ToList();
+    }).Where(transaction=>!transaction.Operation.Contains("Redem")).ToList();
 }
 
 
